@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="830.0" prefWidth="1171.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.predatorandprey.HelloController">
+     <Label fx:id="predatorCountLabel" layoutX="401.0" layoutY="611.0" text="0" />
+     <Label layoutX="274.0" layoutY="643.0" prefHeight="17.0" prefWidth="63.0" text="Liczba ofiar:" />
+     <Label fx:id="preyCountLabel" layoutX="353.0" layoutY="643.0" text="0" />
+     <Label layoutX="24.0" layoutY="703.0" text="Krok symulacji:" />
+     <Label fx:id="simulationStepLabel" layoutX="132.0" layoutY="703.0" prefHeight="17.0" prefWidth="63.0" text="0" />
+
+    <GridPane fx:id="gridPane" layoutX="14.0" layoutY="56.0" prefHeight="504.0" prefWidth="781.0">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="50" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints prefHeight="50" />
+        </rowConstraints>
+    </GridPane>
+   <Button fx:id="btnStartStop" layoutX="16.0" layoutY="616.0" onAction="#startOrStopSimulation" prefHeight="35.0" prefWidth="96.0" text="Start/Stop" />
+   <Button fx:id="btnReset" layoutX="127.0" layoutY="616.0" onAction="#resetSimulation" prefHeight="35.0" prefWidth="96.0" text="Reset/Set" />
+     <Slider fx:id="speedSlider" layoutX="17.0" layoutY="675.0" max="10" min="1" prefHeight="17.0" prefWidth="230.0" value="5" />
+     <Label layoutX="274.0" layoutY="611.0" text="Liczba drapieżników:" />
+     <Label layoutX="25.0" layoutY="6.0" text="Rozmiar siatki:" />
+     <TextField fx:id="gridSizeTextField" layoutX="24.0" layoutY="26.0" promptText="Podaj rozmiar siatki" text="10" />
+     <Label layoutX="839.0" layoutY="38.0" text="Liczba drapieżników:" />
+     <TextField fx:id="predatorCountTextField" layoutX="839.0" layoutY="56.0" promptText="Podaj liczbę drapieżników" text="10" />
+     <Label layoutX="839.0" layoutY="317.0" text="Liczba ofiar:" />
+     <TextField fx:id="preyCountTextField" layoutX="839.0" layoutY="340.0" promptText="Podaj liczbę ofiar" text="10" />
+     <Label layoutX="28.0" layoutY="656.0" text="Prędkość symulacji:" />
+   <Separator layoutX="815.0" layoutY="25.0" orientation="VERTICAL" prefHeight="538.0" prefWidth="28.0" />
+   <Separator layoutX="846.0" layoutY="300.0" prefHeight="17.0" prefWidth="283.0" />
+   <Label layoutX="189.0" layoutY="4.0" text="Wielkość kwadratów" />
+   <TextField fx:id="tfSizeAnimals" layoutX="188.0" layoutY="24.0" promptText="Podaj rozmiar siatki" text="50" />
+   <LineChart fx:id="populationChart" layoutX="439.0" layoutY="578.0" prefHeight="228.0" prefWidth="498.0">
+     <xAxis>
+       <CategoryAxis side="BOTTOM" />
+     </xAxis>
+     <yAxis>
+       <NumberAxis side="LEFT" />
+     </yAxis>
+   </LineChart>
+
+</AnchorPane>
