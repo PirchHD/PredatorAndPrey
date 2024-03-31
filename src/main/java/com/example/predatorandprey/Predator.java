@@ -5,9 +5,13 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Random;
 
-public class Predator extends Animal {
-    public Predator(int size) {
-        super(size);
+public class Predator extends Animal
+{
+
+    public Predator()
+    {
+        super();
+        setStroke(Color.BLACK);
         setFill(Color.RED);
     }
 

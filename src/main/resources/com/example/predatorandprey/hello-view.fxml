@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1171.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.predatorandprey.HelloController">
+<AnchorPane prefHeight="830.0" prefWidth="1171.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.predatorandprey.HelloController">
      <Label fx:id="predatorCountLabel" layoutX="401.0" layoutY="611.0" text="0" />
      <Label layoutX="274.0" layoutY="643.0" prefHeight="17.0" prefWidth="63.0" text="Liczba ofiar:" />
      <Label fx:id="preyCountLabel" layoutX="353.0" layoutY="643.0" text="0" />
@@ -43,7 +44,7 @@
    <Separator layoutX="846.0" layoutY="300.0" prefHeight="17.0" prefWidth="283.0" />
    <Label layoutX="189.0" layoutY="4.0" text="Wielkość kwadratów" />
    <TextField fx:id="tfSizeAnimals" layoutX="188.0" layoutY="24.0" promptText="Podaj rozmiar siatki" text="50" />
-   <LineChart fx:id="populationChart" layoutX="439.0" layoutY="578.0" prefHeight="228.0" prefWidth="498.0">
+   <LineChart fx:id="populationChart" layoutX="439.0" layoutY="578.0" prefHeight="210.0" prefWidth="494.0">
      <xAxis>
        <CategoryAxis side="BOTTOM" />
      </xAxis>
@@ -51,5 +52,23 @@
        <NumberAxis side="LEFT" />
      </yAxis>
    </LineChart>
+   <Label layoutX="843.0" layoutY="90.0" text="Współczynnik  przeżywalności (0.0 - 1.0)" />
+   <TextField fx:id="tfPredatorRate" disable="true" layoutX="863.0" layoutY="107.0" promptText="Podaj liczbę drapieżników" text="0.5" />
+   <Label layoutX="839.0" layoutY="376.0" text="Współczynnik  przeżywalnośc (0.0 - 1.0)" />
+   <TextField fx:id="tfPreyRate" disable="true" layoutX="861.0" layoutY="396.0" promptText="Podaj liczbę ofiar" text="0.5" />
+   <CheckBox fx:id="cbPredatorRate" layoutX="839.0" layoutY="107.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <CheckBox fx:id="cbPreyRate" layoutX="836.0" layoutY="396.0" mnemonicParsing="false" onAction="#cbPreyRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <Label layoutX="840.0" layoutY="132.0" text="Współczynnik  rozmnażania (0.0 - 1.0)" />
+   <TextField fx:id="tfPredatorReproduceRate" disable="true" layoutX="860.0" layoutY="149.0" promptText="Podaj liczbę drapieżników" text="0.5" />
+   <CheckBox fx:id="cbPredatorReproduceRate" layoutX="836.0" layoutY="149.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <Label layoutX="839.0" layoutY="421.0" text="Współczynnik  rozmnażania (0.0 - 1.0)" />
+   <TextField fx:id="tfPreyReproduceRate" disable="true" layoutX="861.0" layoutY="441.0" promptText="Podaj liczbę ofiar" text="0.5" />
+   <CheckBox fx:id="cbPreyReproduceRate" layoutX="836.0" layoutY="441.0" mnemonicParsing="false" onAction="#cbPreyRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <Label layoutX="840.0" layoutY="174.0" text="Do którego kroku ma żyć ?" />
+   <TextField fx:id="tfPredatorDie" disable="true" layoutX="860.0" layoutY="191.0" promptText="Podaj liczbę drapieżników" text="10" />
+   <CheckBox fx:id="cbPredatorDie" layoutX="836.0" layoutY="191.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <Label layoutX="840.0" layoutY="473.0" text="Do którego kroku ma żyć ?" />
+   <TextField fx:id="tfPreyDie" disable="true" layoutX="860.0" layoutY="490.0" promptText="Podaj liczbę drapieżników" text="10" />
+   <CheckBox fx:id="cbPreyDie" layoutX="836.0" layoutY="490.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
 
 </AnchorPane>

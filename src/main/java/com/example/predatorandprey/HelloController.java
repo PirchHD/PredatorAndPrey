@@ -1,32 +1,22 @@
 package com.example.predatorandprey;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class HelloController
 {
 
-    private boolean isSimulationRunning = false;
-
-
     @FXML
     private Slider speedSlider;
-
 
     @FXML
     private TextField preyCountTextField;
@@ -49,8 +39,35 @@ public class HelloController
     @FXML
     private Label preyCountLabel;
 
+    @FXML
+    private TextField tfPredatorRate;
+    @FXML
+    private CheckBox cbPredatorRate;
 
+    @FXML
+    private TextField tfPreyRate;
+    @FXML
+    private CheckBox cbPreyRate;
 
+    @FXML
+    private TextField tfPredatorReproduceRate;
+    @FXML
+    private CheckBox cbPredatorReproduceRate;
+
+    @FXML
+    private TextField tfPreyReproduceRate;
+    @FXML
+    private CheckBox cbPreyReproduceRate;
+
+    @FXML
+    private TextField tfPredatorDie;
+    @FXML
+    private CheckBox cbPredatorDie;
+
+    @FXML
+    private TextField tfPreyDie;
+    @FXML
+    private CheckBox cbPreyDie;
 
     @FXML
     private Button btnStartStop;
@@ -60,23 +77,26 @@ public class HelloController
     @FXML
     private GridPane gridPane;
 
-//    @FXML
-//    private LineChart<Integer, Integer> populationChart;
-//    private XYChart.Series<Integer, Integer> predatorSeries;
-//    private XYChart.Series<Integer, Integer> preySeries;
+    @FXML
+    private LineChart<Number, Number> populationChart;
 
+    private XYChart.Series<Number, Number> predatorSeries;
+    private XYChart.Series<Number, Number> preySeries;
 
     private AnimationTimer simulationTimer;
 
 
+    /** Czy symulacja trwa ? */
+    private boolean isSimulationRunning = false;
 
+    /** Kroki w symulacji **/
     private int simulationSteps = 0;
 
 
     /** Wielkośc grida */
-    private int GRID_SIZE = 10;
+    public static int GRID_SIZE = 10;
     /** Wielkośc grida */
-    private int SIZE_ANIMALS = 50;
+    public static int SIZE_ANIMALS = 50;
 
     /** Ilość drapieżników */
     private int PREDATOR_SIZE = 10;
@@ -84,8 +104,18 @@ public class HelloController
     private int PREYS_SIZE = 10;
 
 
+    /** Współczynniki przeżywalności */
+    private double PREDATOR_SURVIVAL_RATE = 0.2;
+    private static boolean IS_PREDATOR_SURVIVAL_RATE = false;
 
-    // Metoda inicjalizująca
+    /** Współczynniki przeżywalności */
+    private double PREY_SURVIVAL_RATE = 0.2;
+    private static boolean IS_PREY_SURVIVAL_RATE = false;
+
+
+    /**
+     * Inicjalizacja ekranu
+     * */
     @FXML
     private void initialize()
     {
@@ -104,6 +134,9 @@ public class HelloController
         simulationStepLabel.setText("0");
     }
 
+    /**
+     * Tworzenie planszy
+     * */
     private void createGrid()
     {
         gridPane.getChildren().clear();
@@ -113,55 +146,60 @@ public class HelloController
         {
             for (int j = 0; j < GRID_SIZE; j++)
             {
-                Rectangle rectangle = new Rectangle(SIZE_ANIMALS, SIZE_ANIMALS);
-                rectangle.setStroke(Color.BLACK);
-                rectangle.setFill(Color.WHITE);
+                Animal rectangle = new Animal();
                 gridPane.add(rectangle, i, j);
             }
         }
     }
 
+    /**
+     * Ustawienie drapieżników oraz ofiar w randomowych miejscach na gridzie
+     *
+     * TODO dodać sprawdzenie czy miejsce jest zajete
+     * */
     private void placePredatorsAndPreys()
     {
         Random random = new Random();
 
         for (int i = 0; i < PREDATOR_SIZE; i++)
         {
-            int x = random.nextInt(GRID_SIZE);
-            int y = random.nextInt(GRID_SIZE);
-            Rectangle predator = new Rectangle(SIZE_ANIMALS, SIZE_ANIMALS);
-            predator.setStroke(Color.BLACK);
-            predator.setFill(Color.RED);
-            gridPane.add(predator, x, y);
+            Predator predator = new Predator();
+            gridPane.add(predator, random.nextInt(GRID_SIZE), random.nextInt(GRID_SIZE));
         }
 
         for (int i = 0; i < PREYS_SIZE; i++)
         {
-            int x = random.nextInt(GRID_SIZE);
-            int y = random.nextInt(GRID_SIZE);
-            Rectangle prey = new Rectangle(SIZE_ANIMALS, SIZE_ANIMALS);
-            prey.setStroke(Color.BLACK);
-            prey.setFill(Color.GREEN);
-            gridPane.add(prey, x, y);
+            Prey prey = new Prey();
+            gridPane.add(prey, random.nextInt(GRID_SIZE), random.nextInt(GRID_SIZE));
         }
     }
 
     private void setupChart()
     {
-//        NumberAxis xAxis = new NumberAxis();
-//        NumberAxis yAxis = new NumberAxis();
-//        populationChart.setTitle("Population Simulation");
-//        xAxis.setLabel("Simulation Steps");
-//        yAxis.setLabel("Population Count");
-//
-//        predatorSeries = new XYChart.Series<>();
-//        predatorSeries.setName("Predators");
-//        preySeries = new XYChart.Series<>();
-//        preySeries.setName("Preys");
-//
-//        populationChart.getData().addAll(predatorSeries, preySeries);
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        populationChart.setTitle("Population Simulation");
+        xAxis.setLabel("Simulation Steps");
+        yAxis.setLabel("Population Count");
+
+        predatorSeries = new XYChart.Series<>();
+        predatorSeries.setName("Predators");
+        preySeries = new XYChart.Series<>();
+        preySeries.setName("Preys");
+
+       // predatorSeries.getData().add(new XYChart.Data<>(1,1));
+
+
+        populationChart.getData().addAll(predatorSeries, preySeries);
+
     }
 
+
+    /**
+     * Klikniecie przycisku "Start/stop"
+     *
+     * Rozpoczyna symulacje albo ją stopuje
+     * */
     @FXML
     private void startOrStopSimulation()
     {
@@ -179,6 +217,9 @@ public class HelloController
         isSimulationRunning = !isSimulationRunning;
     }
 
+    /**
+     * Reset symulacji oraz ustawienie nowych wartości
+     * */
     @FXML
     private void resetSimulation()
     {
@@ -186,6 +227,10 @@ public class HelloController
         PREDATOR_SIZE =  Integer.valueOf(predatorCountTextField.getText());
         PREYS_SIZE =  Integer.valueOf(preyCountTextField.getText());
         SIZE_ANIMALS =  Integer.valueOf(tfSizeAnimals.getText());
+        PREDATOR_SURVIVAL_RATE = Double.valueOf(tfPredatorRate.getText());
+        IS_PREDATOR_SURVIVAL_RATE = cbPredatorRate.isSelected();
+        PREY_SURVIVAL_RATE = Double.valueOf(tfPreyRate.getText());
+        IS_PREY_SURVIVAL_RATE = cbPredatorRate.isSelected();
 
         simulationSteps = 0;
         predatorCountLabel.setText("0");
@@ -196,9 +241,11 @@ public class HelloController
     }
 
 
+    /** Symulacja */
     private void startSimulation()
     {
-        simulationTimer = new AnimationTimer() {
+        simulationTimer = new AnimationTimer()
+        {
             private long lastUpdate = 0;
             double speed = speedSlider.getValue();
             double interval = (1.0 / speed * 1_000_000_000);
@@ -219,6 +266,9 @@ public class HelloController
         simulationTimer.start();
     }
 
+    /**
+     * Zatrzymuje symulacje
+     * */
     private void stopSimulation()
     {
         simulationTimer.stop();
@@ -226,20 +276,22 @@ public class HelloController
 
     private void updateChart()
     {
-//        predatorSeries.getData().add(new XYChart.Data<>(simulationSteps, Integer.parseInt(predatorCountLabel.getText())));
-//        preySeries.getData().add(new XYChart.Data<>(simulationSteps, Integer.parseInt(preyCountLabel.getText())));
+        //predatorSeries.getData().add(new XYChart.Data<>(simulationSteps, Integer.parseInt(predatorCountLabel.getText())));
+       // preySeries.getData().add(new XYChart.Data<>(simulationSteps, Integer.parseInt(preyCountLabel.getText())));
     }
+
+
 
     private void moveEntities()
     {
         Random random = new Random();
-        for (int i = 0; i < gridPane.getChildren().size(); i++) {
-            Rectangle entity = (Rectangle) gridPane.getChildren().get(i);
-            Color fill = (Color) entity.getFill();
-            int x = GridPane.getColumnIndex(entity);
-            int y = GridPane.getRowIndex(entity);
+        for (int i = 0; i < gridPane.getChildren().size(); i++)
+        {
+            Rectangle rectangle = (Rectangle) gridPane.getChildren().get(i);
+            int x = GridPane.getColumnIndex(rectangle);
+            int y = GridPane.getRowIndex(rectangle);
 
-            if (fill.equals(Color.RED))
+            if (rectangle instanceof Predator)
             {
                 int dx = random.nextInt(3) - 1;
                 int dy = random.nextInt(3) - 1;
@@ -248,29 +300,39 @@ public class HelloController
                 if (tryToEatPrey(newX, newY))
                     continue;
 
-                GridPane.setConstraints(entity, newX, newY);
+                if (IS_PREDATOR_SURVIVAL_RATE && random.nextDouble() > PREDATOR_SURVIVAL_RATE)
+                    gridPane.getChildren().remove(rectangle);
+                else
+                    GridPane.setConstraints(rectangle, newX, newY);
             }
-            else if (fill.equals(Color.GREEN))
+            else if (rectangle instanceof Prey)
             {
-
                 int dx = random.nextInt(3) - 1;
                 int dy = random.nextInt(3) - 1;
                 int newX = Math.max(0, Math.min(GRID_SIZE - 1, x + dx));
                 int newY = Math.max(0, Math.min(GRID_SIZE - 1, y + dy));
                 if (!isPreyEaten(newX, newY))
-                    GridPane.setConstraints(entity, newX, newY);
+                {
+                    GridPane.setConstraints(rectangle, newX, newY);
+                    if (IS_PREY_SURVIVAL_RATE && random.nextDouble() > PREY_SURVIVAL_RATE)
+                        gridPane.getChildren().remove(rectangle);
+                }
                 else
-                    gridPane.getChildren().remove(entity);
-
+                    gridPane.getChildren().remove(rectangle);
             }
         }
 
     }
 
-
+    /**
+     * Próbuje zjeśc ofiare
+     *
+     * @return true/false - udało sie zjeść albo nie
+     * */
     private boolean tryToEatPrey(int x, int y)
     {
-        for (int i = 0; i < gridPane.getChildren().size(); i++) {
+        for (int i = 0; i < gridPane.getChildren().size(); i++)
+        {
             Rectangle entity = (Rectangle) gridPane.getChildren().get(i);
             Color fill = (Color) entity.getFill();
             if (fill.equals(Color.GREEN))
@@ -284,9 +346,15 @@ public class HelloController
                 }
             }
         }
+
         return false;
     }
 
+    /**
+     * Czy ofiara została zjedzona
+     *
+     * @return true/false - została zjedzona (czy ofiara sama na weszla)
+     * */
     private boolean isPreyEaten(int x, int y)
     {
         for (int i = 0; i < gridPane.getChildren().size(); i++) {
@@ -304,6 +372,9 @@ public class HelloController
     }
 
 
+    /**
+     * Aktualizacja informacji w kontrolkach
+     * */
     private void updateCountLabels()
     {
         int predatorCount = 0;
@@ -331,5 +402,23 @@ public class HelloController
         gridSizeTextField.setDisable(isDisable);
         btnReset.setDisable(isDisable);
     }
+
+    @FXML
+    private void cbPredatorRateOnAction()
+    {
+        PREDATOR_SURVIVAL_RATE = Double.valueOf(tfPredatorRate.getText());
+        IS_PREDATOR_SURVIVAL_RATE = cbPredatorRate.isSelected();
+        tfPredatorRate.setDisable(!cbPredatorRate.isSelected());
+    }
+
+    @FXML
+    private void cbPreyRateOnAction()
+    {
+        PREY_SURVIVAL_RATE = Double.valueOf(tfPreyRate.getText());
+        IS_PREY_SURVIVAL_RATE = cbPreyRate.isSelected();
+        tfPreyRate.setDisable(!cbPreyRate.isSelected());
+    }
+
+
 
 }

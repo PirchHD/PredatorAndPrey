@@ -9,9 +9,9 @@ public  class Animal extends Rectangle
     protected int x;
     protected int y;
 
-    protected Animal(int size)
+    protected Animal()
     {
-        super(size, size);
+        super(HelloController.SIZE_ANIMALS, HelloController.SIZE_ANIMALS);
         setStroke(Color.BLACK);
         setFill(Color.WHITE);
     }

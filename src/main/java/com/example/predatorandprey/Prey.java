@@ -6,8 +6,9 @@ import javafx.scene.layout.GridPane;
 import java.util.Random;
 
 public class Prey extends Animal {
-    public Prey(int size) {
-        super(size);
+    public Prey() {
+        super();
+        setStroke(Color.BLACK);
         setFill(Color.GREEN);
     }
 
