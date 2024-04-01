@@ -95,7 +95,7 @@ public class HelloController
 
     /** Wielkośc grida */
     public static int GRID_SIZE = 10;
-    /** Wielkośc grida */
+    /** Wielkośc kwadratów */
     public static int SIZE_ANIMALS = 50;
 
     /** Ilość drapieżników */
@@ -104,14 +104,37 @@ public class HelloController
     private int PREYS_SIZE = 10;
 
 
-    /** Współczynniki przeżywalności */
+    /** Współczynniki przeżywalności dla drapieżników */
     private double PREDATOR_SURVIVAL_RATE = 0.2;
+    /** Czy bierzemy pod uwage "Współczynniki przeżywalności" */
     private static boolean IS_PREDATOR_SURVIVAL_RATE = false;
 
-    /** Współczynniki przeżywalności */
+    /** Współczynniki reprodukcji dla drapieżników */
+    private double PREDATOR_REPRODUCE_RATE = 0.2;
+    /** Czy bierzemy pod uwage "Współczynniki reprodukcji" dla drapiezników */
+    private static boolean IS_PREDATOR_REPRODUCE_RATE = false;
+
+    /** Do którego kroku drapiezniki mają żyć */
+    private int PREDATOR_DIE = 10;
+    /** Czy drapiezniki maja umierac z starości */
+    private static boolean IS_PREDATOR_DIE = false;
+
+
+
+    /** Współczynniki przeżywalności dla ofiar */
     private double PREY_SURVIVAL_RATE = 0.2;
+    /** Czy bierzemy pod uwage "Współczynniki przeżywalności" */
     private static boolean IS_PREY_SURVIVAL_RATE = false;
 
+    /** Współczynniki reprodukcji dla ofiar */
+    private double PREY_REPRODUCE_RATE = 0.2;
+    /** Czy bierzemy pod uwage "Współczynniki reprodukcji" dla ofiar */
+    private static boolean IS_PREY_REPRODUCE_RATE = false;
+
+    /** Do którego kroku drapiezniki mają żyć */
+    private int PREY_DIE = 10;
+    /** Czy drapiezniki maja umierac z starości */
+    private static boolean IS_PREY_DIE = false;
 
     /**
      * Inicjalizacja ekranu
@@ -224,13 +247,32 @@ public class HelloController
     private void resetSimulation()
     {
         GRID_SIZE =  Integer.valueOf(gridSizeTextField.getText());
+        SIZE_ANIMALS =  Integer.valueOf(tfSizeAnimals.getText());
+
         PREDATOR_SIZE =  Integer.valueOf(predatorCountTextField.getText());
         PREYS_SIZE =  Integer.valueOf(preyCountTextField.getText());
-        SIZE_ANIMALS =  Integer.valueOf(tfSizeAnimals.getText());
+
+
+        /** Ustawienia drapiezników:  */
         PREDATOR_SURVIVAL_RATE = Double.valueOf(tfPredatorRate.getText());
         IS_PREDATOR_SURVIVAL_RATE = cbPredatorRate.isSelected();
+
+        PREDATOR_REPRODUCE_RATE = Double.valueOf(tfPredatorReproduceRate.getText());
+        IS_PREDATOR_REPRODUCE_RATE = cbPredatorReproduceRate.isSelected();
+
+        PREDATOR_DIE = Integer.valueOf(tfPredatorDie.getText());
+        IS_PREDATOR_DIE = cbPredatorDie.isSelected();
+
+
+        /** Ustawienia ofiar:  */
         PREY_SURVIVAL_RATE = Double.valueOf(tfPreyRate.getText());
         IS_PREY_SURVIVAL_RATE = cbPredatorRate.isSelected();
+
+        PREY_REPRODUCE_RATE = Double.valueOf(tfPreyReproduceRate.getText());
+        IS_PREY_REPRODUCE_RATE = cbPreyReproduceRate.isSelected();
+
+        PREY_DIE = Integer.valueOf(tfPreyDie.getText());
+        IS_PREY_DIE = cbPreyDie.isSelected();
 
         simulationSteps = 0;
         predatorCountLabel.setText("0");
