@@ -49,7 +49,7 @@
        <CategoryAxis side="BOTTOM" />
      </xAxis>
      <yAxis>
-       <NumberAxis side="LEFT" />
+       <NumberAxis side="LEFT"  fx:id="xAxis"  />
      </yAxis>
    </LineChart>
    <Label layoutX="843.0" layoutY="90.0" text="Współczynnik  przeżywalności (0.0 - 1.0)" />
@@ -60,15 +60,15 @@
    <CheckBox fx:id="cbPreyRate" layoutX="836.0" layoutY="396.0" mnemonicParsing="false" onAction="#cbPreyRateOnAction" prefHeight="25.0" prefWidth="21.0" />
    <Label layoutX="840.0" layoutY="132.0" text="Współczynnik  rozmnażania (0.0 - 1.0)" />
    <TextField fx:id="tfPredatorReproduceRate" disable="true" layoutX="860.0" layoutY="149.0" promptText="Podaj liczbę drapieżników" text="0.5" />
-   <CheckBox fx:id="cbPredatorReproduceRate" layoutX="836.0" layoutY="149.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <CheckBox fx:id="cbPredatorReproduceRate" layoutX="836.0" layoutY="149.0" mnemonicParsing="false" onAction="#cbPredatorReproduceOnAction" prefHeight="25.0" prefWidth="21.0" />
    <Label layoutX="839.0" layoutY="421.0" text="Współczynnik  rozmnażania (0.0 - 1.0)" />
    <TextField fx:id="tfPreyReproduceRate" disable="true" layoutX="861.0" layoutY="441.0" promptText="Podaj liczbę ofiar" text="0.5" />
-   <CheckBox fx:id="cbPreyReproduceRate" layoutX="836.0" layoutY="441.0" mnemonicParsing="false" onAction="#cbPreyRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <CheckBox fx:id="cbPreyReproduceRate" layoutX="836.0" layoutY="441.0" mnemonicParsing="false" onAction="#cbPreyReproduceOnAction" prefHeight="25.0" prefWidth="21.0" />
    <Label layoutX="840.0" layoutY="174.0" text="Do którego kroku ma żyć ?" />
    <TextField fx:id="tfPredatorDie" disable="true" layoutX="860.0" layoutY="191.0" promptText="Podaj liczbę drapieżników" text="10" />
-   <CheckBox fx:id="cbPredatorDie" layoutX="836.0" layoutY="191.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <CheckBox fx:id="cbPredatorDie" layoutX="836.0" layoutY="191.0" mnemonicParsing="false" onAction="#cbPredatorDieOnAction" prefHeight="25.0" prefWidth="21.0" />
    <Label layoutX="840.0" layoutY="473.0" text="Do którego kroku ma żyć ?" />
    <TextField fx:id="tfPreyDie" disable="true" layoutX="860.0" layoutY="490.0" promptText="Podaj liczbę drapieżników" text="10" />
-   <CheckBox fx:id="cbPreyDie" layoutX="836.0" layoutY="490.0" mnemonicParsing="false" onAction="#cbPredatorRateOnAction" prefHeight="25.0" prefWidth="21.0" />
+   <CheckBox fx:id="cbPreyDie" layoutX="836.0" layoutY="490.0" mnemonicParsing="false" onAction="#cbPreyDieOnAction" prefHeight="25.0" prefWidth="21.0" />
 
 </AnchorPane>

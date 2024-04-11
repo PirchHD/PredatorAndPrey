@@ -6,6 +6,13 @@ import javafx.scene.shape.Rectangle;
 
 public  class Animal extends Rectangle
 {
+
+    /** Wiek jednoski */
+    int age = 0;
+
+    /** Do kiedy ma żyć ? */
+    int live = 10;
+
     protected int x;
     protected int y;
 
@@ -27,6 +34,16 @@ public  class Animal extends Rectangle
                 .filter(node -> node instanceof Animal)
                 .map(node -> (Animal) node)
                 .noneMatch(animal -> animal.x == newX && animal.y == newY);
+    }
+
+    public void setLive(int whenDie)
+    {
+        live = whenDie;
+    }
+
+    public void addOneYear()
+    {
+        age++;
     }
 }
 
